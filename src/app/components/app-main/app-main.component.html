@@ -1,0 +1,20 @@
+<div class="main-container">
+  <div class="d-flex flex-wrap">
+    <div class="mr-auto add-button-container">
+      <button class="btn btn-info" (click)="addNewContact()">
+        Add Contact
+      </button>
+    </div>
+    <div>
+      <contact-status-widget></contact-status-widget>
+    </div>
+  </div>
+
+  <add-new-contact [isAdding]="isAdding"></add-new-contact>
+
+  <!-- <div class="row">
+    <div class="col"> -->
+  <add-edit-contact *ngFor="let contact of contacts;index as i" [contactObj]="contact"></add-edit-contact>
+  <!-- </div>
+  </div> -->
+</div>

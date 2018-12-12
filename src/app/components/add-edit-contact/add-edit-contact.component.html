@@ -1,0 +1,135 @@
+<div class="container-fluid add-edit-contact-container">
+  <!-- Read only form -->
+  <div *ngIf="!isEditing && contactObj" class="media p-3">
+    <img src="../../../assets/images/img_avatar3.png" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+
+    <div class="media-body">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h4>{{contactObj.firstName + ' ' + contactObj.lastName}}</h4>
+        </div>
+
+        <div>
+          <small><i>Contact created on {{contactObj.dateOfCreation}}</i></small>
+        </div>
+
+        <div>
+          <div class="d-flex">
+            <div class="flex-fill">
+              Status : <strong>{{contactObj.status}}</strong>
+            </div>
+            <div class="flex-fill ml-2">
+              <button class="btn btn-sm btn-info" (click)="isEditing = !isEditing">Edit</button>
+            </div>
+            <div class="flex-fill ml-2">
+              <button class="btn btn-sm btn-secondary">Delete</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div>
+        Phone Number: {{contactObj.phoneNumber}}
+      </div>
+      <div>
+        Email: {{contactObj.email}}
+      </div>
+      <br>
+      <div data-toggle="collapse" data-target="#moreDetails" style="color: skyblue;text-decoration: underline;cursor:pointer">More
+        Details</div>
+      <div id="moreDetails" class="collapse">
+        <div>
+          SeconDary Phone Number: {{contactObj.secondaryPhoneNumber}}
+        </div>
+        <div>
+          Address: {{contactObj.address}}
+        </div>
+        <div>
+          Company: {{contactObj.company}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit form -->
+  <div *ngIf="isEditing" class="card edit-form-container">
+
+    <div class="card-body">
+      <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+        <div class="d-flex">
+          <div class="form-group input-group" style="width: 50%">
+            <div class="input-group-prepend form-group">
+              <select formControlName="prefix" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.prefix.errors }">
+                <option>Mr.</option>
+                <option>Mrs.</option>
+                <option>Ms.</option>
+              </select>
+            </div>
+
+            <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted &&   formControls.firstName.errors }"
+              placeholder="First Name" />
+
+            <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.lastName.errors }"
+              placeholder="Last Name" />
+
+            <div *ngIf="submitted && formControls.prefix.errors" class="invalid-feedback">
+              <div *ngIf="formControls.prefix.errors.required">Prefix is required</div>
+            </div>
+
+            <div *ngIf="submitted && formControls.firstName.errors" class="invalid-feedback">
+              <div *ngIf="formControls.firstName.errors.required">First name is required</div>
+            </div>
+            <div *ngIf="submitted && formControls.lastName.errors" class="invalid-feedback">
+              <div *ngIf="formControls.lastName.errors.required">Last name is required</div>
+            </div>
+          </div>
+
+          <div class="status-toggler-container">
+            <div class="d-flex status-toggler">
+              <div class="switch-container">
+                <label class="switch">
+                  <input type="checkbox" formControlName="statusActive" (change)="statusChanged()">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <div class="switch-container-text">
+                {{currentStatus}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" style="width: 50%">
+          <input type="number" formControlName="phoneNumber" placeholder="Phone number" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.phoneNumber.errors }" />
+          <div *ngIf="submitted && formControls.phoneNumber.errors" class="invalid-feedback">
+            <div *ngIf="formControls.phoneNumber.errors.required">Phone number is required</div>
+          </div>
+        </div>
+
+        <div class="form-group" style="width: 50%">
+          <input type="email" formControlName="email" placeholder="Email" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.email.errors }" />
+          <div *ngIf="submitted && formControls.email.errors" class="invalid-feedback">
+            <div *ngIf="formControls.email.errors.required">Email is required</div>
+            <div *ngIf="formControls.email.errors.email">Email name should contain '@'</div>
+          </div>
+        </div>
+
+        <div class="form-group" style="width: 50%">
+          <input type="number" formControlName="secondaryPhoneNumber" placeholder="Secondary Phone Number (Optional)"
+            class="form-control" />
+        </div>
+
+        <div class="form-group" style="width: 50%">
+          <input type="text" formControlName="address" placeholder="Address (Optional)" class="form-control" />
+        </div>
+
+        <div class="form-group" style="width: 50%">
+          <input type="text" formControlName="company" placeholder="Company (Optional)" class="form-control" />
+        </div>
+
+        <button class="btn btn-sm btn-info" (click)="saveEditedContact()">Save</button>
+
+      </form>
+    </div>
+  </div>
+</div>

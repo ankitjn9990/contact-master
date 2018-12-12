@@ -1,0 +1,84 @@
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 29px;
+  height: 15px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 11px;
+  width: 11px;
+  left: 1px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.add-edit-contact-container {
+  margin: 15px 0 0 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: white;
+  border-radius: 3px;
+}
+
+.status-toggler {
+  &-container {
+    margin: 5px 0 0 10px;
+  }
+  background-color: #ebebeb;
+  width: 100px;
+  border-radius: 10px;
+  height: 20px;
+}
+
+.edit-form-container {
+  border: none;
+}
+
+.switch-container {
+  margin: 3px 2px 0 12px;
+  &-text {
+      font-size: small;
+      margin-top: 2px;
+  }
+}

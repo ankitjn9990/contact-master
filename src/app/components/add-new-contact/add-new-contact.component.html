@@ -1,0 +1,82 @@
+<div class="container-fluid add-edit-contact-container">
+  <div *ngIf="isAdding" class="card edit-form-container">
+
+    <div class="card-body">
+      <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+        <div class="d-flex">
+          <div class="form-group input-group" style="width: 50%">
+            <div class="input-group-prepend form-group">
+              <select formControlName="prefix" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.prefix.errors }">
+                <option>Mr.</option>
+                <option>Mrs.</option>
+                <option>Ms.</option>
+              </select>
+            </div>
+
+            <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted &&   formControls.firstName.errors }"
+              placeholder="First Name" />
+
+            <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.lastName.errors }"
+              placeholder="Last Name" />
+
+            <div *ngIf="submitted && formControls.prefix.errors" class="invalid-feedback">
+              <div *ngIf="formControls.prefix.errors.required">Prefix is required</div>
+            </div>
+
+            <div *ngIf="submitted && formControls.firstName.errors" class="invalid-feedback">
+              <div *ngIf="formControls.firstName.errors.required">First name is required</div>
+            </div>
+            <div *ngIf="submitted && formControls.lastName.errors" class="invalid-feedback">
+              <div *ngIf="formControls.lastName.errors.required">Last name is required</div>
+            </div>
+          </div>
+
+          <div class="status-toggler-container">
+            <div class="d-flex status-toggler">
+              <div class="switch-container">
+                <label class="switch">
+                  <input type="checkbox" formControlName="statusActive" (change)="statusChanged()">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <div class="switch-container-text">
+                {{currentStatus}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" style="width: 50%">
+          <input type="number" formControlName="phoneNumber" placeholder="Phone number" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.phoneNumber.errors }" />
+          <div *ngIf="submitted && formControls.phoneNumber.errors" class="invalid-feedback">
+            <div *ngIf="formControls.phoneNumber.errors.required">Phone number is required</div>
+          </div>
+        </div>
+
+        <div class="form-group" style="width: 50%">
+          <input type="email" formControlName="email" placeholder="Email" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.email.errors }" />
+          <div *ngIf="submitted && formControls.email.errors" class="invalid-feedback">
+            <div *ngIf="formControls.email.errors.required">Email is required</div>
+            <div *ngIf="formControls.email.errors.email">Email name should contain '@'</div>
+          </div>
+        </div>
+
+        <div class="form-group" style="width: 50%">
+          <input type="number" formControlName="secondaryPhoneNumber" placeholder="Secondary Phone Number (Optional)"
+            class="form-control" />
+        </div>
+
+        <div class="form-group" style="width: 50%">
+          <input type="text" formControlName="address" placeholder="Address (Optional)" class="form-control" />
+        </div>
+
+        <div class="form-group" style="width: 50%">
+          <input type="text" formControlName="company" placeholder="Company (Optional)" class="form-control" />
+        </div>
+
+        <button class="btn btn-sm btn-info">Save</button>
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+.app-header-container {
+    height: 50px;
+}
+
+.app-main-container {
+    overflow-y: auto;
+    height: calc(100vh - 50px);
+}
