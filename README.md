@@ -1,3 +1,13 @@
+STEPS to run the project :
+
+[1] Install Angular CLI globally with the command - "npm install -g @angular/cli".
+[2] Install Angular CLI locally with the command - "npm install @angular/cli".
+[3] Clone the repository to your local system.
+[4] On terminal navigate to your project folder(cloned repository folder) and run the command - "ng serve".
+[5] Go to http://localhost:4200 on browser, portal should be up and running.
+
+________________________________________________________________________________________________________
+
 # ContactMaster
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.2.
