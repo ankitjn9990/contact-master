@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ContactData } from 'src/app/models/contact-data.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AddContactService } from '../../services/add-contact.service';
 
 @Component({
   selector: 'add-edit-contact',
@@ -9,14 +10,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddEditContactComponent implements OnInit {
   @Input() contactObj;
-  currentStatus: string;
+  @Input() index: number;
+  @Input() filterString: string;
+  @Output() contactDeleted = new EventEmitter<number>();
   isEditing: boolean = false;
   contact: ContactData;
   editForm: FormGroup;
   submitted = false;
   formControls: any;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private addContactService: AddContactService) { }
 
   ngOnInit() {
     this.editForm = this.formBuilder.group({
@@ -28,30 +33,21 @@ export class AddEditContactComponent implements OnInit {
       secondaryPhoneNumber: [this.contactObj.secondaryPhoneNumber],
       address: [this.contactObj.address],
       company: [this.contactObj.company],
-      statusActive: [true]
+      isStatusActive: [this.contactObj.isStatusActive]
     });
     this.formControls = this.editForm.controls;
-    // To set Active/Inactive toggle
-    this.currentStatus = this.contactObj.status;
   }
 
-  onSubmit() {
+  deleteContact() {
+    this.contactDeleted.emit(this.index);
+  }
+
+  saveEditedContact() {
     this.submitted = true;
     // stop here if form is invalid
     if (this.editForm.invalid) {
       return;
     }
-  }
-
-  statusChanged() {
-    if (this.formControls.statusActive.value) {
-      this.currentStatus = 'Active';
-    } else {
-      this.currentStatus = 'Inactive';
-    }
-  }
-
-  saveEditedContact() {
     this.contactObj.prefix = this.formControls.prefix.value;
     this.contactObj.firstName = this.formControls.firstName.value;
     this.contactObj.lastName = this.formControls.lastName.value;
@@ -61,7 +57,9 @@ export class AddEditContactComponent implements OnInit {
     this.contactObj.secondaryPhoneNumber = this.formControls.secondaryPhoneNumber.value;
     this.contactObj.address = this.formControls.address.value;
     this.contactObj.company = this.formControls.company.value;
-    this.contactObj.status = this.currentStatus;
+    this.contactObj.isStatusActive = this.formControls.isStatusActive.value;
     this.isEditing = false;
+    this.deleteContact();
+    this.addContactService.contactAdded.next(this.contactObj);
   }
 }

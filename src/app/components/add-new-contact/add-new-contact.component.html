@@ -4,7 +4,7 @@
     <div class="card-body">
       <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
         <div class="d-flex">
-          <div class="form-group input-group" style="width: 50%">
+          <div class="form-group input-group form-group-custom">
             <div class="input-group-prepend form-group">
               <select formControlName="prefix" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.prefix.errors }">
                 <option>Mr.</option>
@@ -35,25 +35,25 @@
             <div class="d-flex status-toggler">
               <div class="switch-container">
                 <label class="switch">
-                  <input type="checkbox" formControlName="statusActive" (change)="statusChanged()">
+                  <input type="checkbox" formControlName="isStatusActive">
                   <span class="slider round"></span>
                 </label>
               </div>
               <div class="switch-container-text">
-                {{currentStatus}}
+                {{formControls.isStatusActive.value ? 'Active' : 'Inactive'}}
               </div>
             </div>
           </div>
         </div>
 
-        <div class="form-group" style="width: 50%">
+        <div class="form-group form-group-custom">
           <input type="number" formControlName="phoneNumber" placeholder="Phone number" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.phoneNumber.errors }" />
           <div *ngIf="submitted && formControls.phoneNumber.errors" class="invalid-feedback">
             <div *ngIf="formControls.phoneNumber.errors.required">Phone number is required</div>
           </div>
         </div>
 
-        <div class="form-group" style="width: 50%">
+        <div class="form-group form-group-custom">
           <input type="email" formControlName="email" placeholder="Email" class="form-control" [ngClass]="{ 'is-invalid': submitted && formControls.email.errors }" />
           <div *ngIf="submitted && formControls.email.errors" class="invalid-feedback">
             <div *ngIf="formControls.email.errors.required">Email is required</div>
@@ -61,21 +61,21 @@
           </div>
         </div>
 
-        <div class="form-group" style="width: 50%">
+        <div class="form-group form-group-custom">
           <input type="number" formControlName="secondaryPhoneNumber" placeholder="Secondary Phone Number (Optional)"
             class="form-control" />
         </div>
 
-        <div class="form-group" style="width: 50%">
+        <div class="form-group form-group-custom">
           <input type="text" formControlName="address" placeholder="Address (Optional)" class="form-control" />
         </div>
 
-        <div class="form-group" style="width: 50%">
+        <div class="form-group form-group-custom">
           <input type="text" formControlName="company" placeholder="Company (Optional)" class="form-control" />
         </div>
 
         <button class="btn btn-sm btn-info">Save</button>
-
+        <button class="btn btn-sm btn-info ml-1" (click)="cancelClicked()">Cancel</button>
       </form>
     </div>
   </div>

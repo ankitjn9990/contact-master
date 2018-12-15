@@ -1,20 +1,24 @@
 <div class="main-container">
-  <div class="d-flex flex-wrap">
-    <div class="mr-auto add-button-container">
-      <button class="btn btn-info" (click)="addNewContact()">
-        Add Contact
-      </button>
-    </div>
-    <div>
-      <contact-status-widget></contact-status-widget>
-    </div>
+  <div class="mr-auto add-button-container">
+    <button class="btn btn-info" (click)="addNewContact()">
+      Add Contact
+    </button>
   </div>
-
   <add-new-contact [isAdding]="isAdding"></add-new-contact>
-
-  <!-- <div class="row">
-    <div class="col"> -->
-  <add-edit-contact *ngFor="let contact of contacts;index as i" [contactObj]="contact"></add-edit-contact>
-  <!-- </div>
-  </div> -->
+  <br>
+  <div class="btn-group btn-group-sm">
+    <button [ngClass]="filterString === '' ? 'btn btn-info' : 'btn btn-outline-info'" (click)="updateFilter('')">All
+      Contacts<span [ngClass]="filterString === '' ? 'badge badge-light ml-1' : 'badge badge-info ml-1'">{{allCount}}</span></button>
+    <button [ngClass]="filterString === 'Active' ? 'btn btn-info' : 'btn btn-outline-info'" (click)="updateFilter('Active')">Active<span
+        [ngClass]="filterString === 'Active' ? 'badge badge-light ml-1' : 'badge badge-info ml-1'">{{activeCount}}</span></button>
+    <button [ngClass]="filterString === 'Inactive' ? 'btn btn-info' : 'btn btn-outline-info'" (click)="updateFilter('Inactive')">Inactive<span
+        [ngClass]="filterString === 'Inactive' ? 'badge badge-light ml-1' : 'badge badge-info ml-1'">{{inactiveCount}}</span></button>
+  </div>
+  <div *ngIf="contacts.length === 0">
+    <hr>
+    No contatcs to display
+    <hr>
+  </div>
+  <add-edit-contact *ngFor="let contact of contacts | filter: filterString:'isStatusActive';index as i" [contactObj]="contact"
+    [index]="i" [filterString]="filterString" (contactDeleted)="contactDeleted($event)"></add-edit-contact>
 </div>

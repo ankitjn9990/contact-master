@@ -4,7 +4,7 @@ export class ContactData {
     lastName: string;
     phoneNumber: number;
     email: string;
-    status: string;
+    isStatusActive: boolean;
     dateOfCreation: Date;
     secondaryPhoneNumber: number;
     address: string;
@@ -14,11 +14,11 @@ export class ContactData {
         this.prefix = '';
         this.firstName = '';
         this.lastName = '';
-        this.phoneNumber = 0;
+        this.phoneNumber;
         this.email = '';
-        this.status = 'Active';
+        this.isStatusActive = true;
         this.dateOfCreation = new Date();
-        this.secondaryPhoneNumber = 0;
+        this.secondaryPhoneNumber;
         this.address = '';
         this.company = '';
     }

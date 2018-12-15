@@ -33,11 +33,11 @@ export class AddNewContactComponent implements OnInit {
       secondaryPhoneNumber: [this.contact.secondaryPhoneNumber],
       address: [this.contact.address],
       company: [this.contact.company],
-      statusActive: [true]
+      isStatusActive: [this.contact.isStatusActive]
     });
     this.formControls = this.addForm.controls;
     // To set Active/Inactive toggle
-    this.statusChanged();
+    // this.statusChanged();
   }
 
   onSubmit() {
@@ -49,7 +49,11 @@ export class AddNewContactComponent implements OnInit {
     this.setContactObject()
     this.addContactService.contactAdded.next(this.contact);
     this.contact = new ContactData();
-    this.addForm.reset();
+    this.resetForm();
+  }
+
+  cancelClicked() {
+    this.addContactService.contactAdded.next('');
   }
 
   setContactObject() {
@@ -62,14 +66,19 @@ export class AddNewContactComponent implements OnInit {
     this.contact.secondaryPhoneNumber = this.formControls.secondaryPhoneNumber.value;
     this.contact.address = this.formControls.address.value;
     this.contact.company = this.formControls.company.value;
-    this.contact.status = this.currentStatus;
+    this.contact.isStatusActive = this.formControls.isStatusActive.value;
   }
 
-  statusChanged() {
-    if (this.formControls.statusActive.value) {
-      this.currentStatus = 'Active';
-    } else {
-      this.currentStatus = 'Inactive';
-    }
+  resetForm() {
+    this.formControls.prefix.value = this.contact.prefix;
+    this.formControls.firstName.value = this.contact.firstName;
+    this.formControls.lastName.value = this.contact.lastName;
+    this.formControls.phoneNumber.value = this.contact.phoneNumber;
+    this.formControls.email.value = this.contact.email;
+    // this.contact.dateOfCreation = new Date();
+    this.formControls.secondaryPhoneNumber.value = this.contact.secondaryPhoneNumber;
+    this.formControls.address.value = this.contact.address;
+    this.formControls.company.value = this.contact.company;
+    this.formControls.isStatusActive.value = this.contact.isStatusActive;
   }
 }
